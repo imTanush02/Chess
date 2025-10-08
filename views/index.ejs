@@ -1,83 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - Chess.com</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/x-icon" href="https://img.icons8.com/fluent/512/chess-com.png">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .chessboard {
-      display: grid;
-      grid-template-columns: repeat(8, minmax(0, 1fr));
-      grid-template-rows: repeat(8, minmax(0, 1fr));
-      width: 400px;
-      height: 400px;
-      transform: rotate(0deg);
-    }
+  <body class="bg-[#2D2B29] relative">
+    <div class="min-h-screen text-white flex items-center flex-col">
+      <div  onclick="location.href='/'" class="w-[15%] cursor-pointer h-[10%]">
+        <img
+          class="w-full h-full object-cover"
+          src="https://imgs.search.brave.com/9rhqtOh9t6A6IMe33XWhWD1a_TQAVWhslOYgC6GXAZw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/Y2hlc3MtY29tLWxv/Z28taXMtc2VhbWxl/c3NseS1tZXJnZWQt/d2l0aC10aGUtcGF3/bi12MC1ud3loZ21z/YTkzemQxLnBuZz93/aWR0aD02NDAmY3Jv/cD1zbWFydCZhdXRv/PXdlYnAmcz03ZWUy/OGM0MDZjYTJhYjNh/NGU5NTdkZjNjMjAx/OTZiZTBhZjViZjhm"
+          alt=""
+        />
+      </div>
+      <div
+        class="p-8 rounded-lg flex flex-col justify-center items-center w-full max-w-xl"
+      >
+        <h2 class="text-4xl font-bold text-center mb-6">
+          Create Your Chess.com Account
+        </h2>
 
-    .piece.white {
-      color: white;
-      filter: drop-shadow(0 0 2px rgba(0, 0, 0, 1));
-    }
+        <img
+          class="w-1/2 h-1/2"
+          src="https://www.chess.com/bundles/web/images/pawn-on-board.svg"
+          alt=""
+        />
 
-    .piece.black {
-      color: black;
-    }
+        <button
+          onclick="location.href='/signup'"
+          class="w-3/4 rounded-lg p-2 text-2xl font-black flex items-center justify-center h-[10%] bg-[#A1D05F] text-white"
+        >
+          Sign Up
+        </button>
 
-    .flipped {
-      transform: rotate(180deg);
-    }
+        <h1 class="mt-10 text-zinc-600">
+          -----------------------------
+          <span class="text-white">OR</span> -----------------------------
+        </h1>
 
-    .square {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+        <button
+          onclick="location.href='/auth/google'"
+          class="flex text-lg font-bold items-center opacity-[80%] hover:opacity-[100%] justify-center gap-4 mt-10 bg-[#1D1C1A] rounded-lg p-2 w-3/4"
+        >
+          <img
+            class="h-[10%] w-[10%]"
+            src="https://imgs.search.brave.com/MIGGUxXvA8eZP5fR9x6pAwOOVi846wgiFXYQTCH5kqg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/aWNvbnNjb3V0LmNv/bS9pY29uL2ZyZWUv/cG5nLTI1Ni9mcmVl/LWdvb2dsZS1sb2dv/LWljb24tc3ZnLWRv/d25sb2FkLXBuZy0y/NDc2NDc5LnBuZz9m/PXdlYnAmdz0xMjg"
+            alt=""
+          />
+          Continue with Google
+        </button>
 
-     .square.Light {
-      background-color: #7F8896;
-    }
-
-     .square.Dark {
-      background-color: #363D4A;
-    }
-
-    .piece {
-      font-size: 36px;
-      cursor: pointer;
-    }
-
-    .piece.draggable {
-      cursor: grab;
-    }
-
-    .dragging {
-      opacity: 0.5;
-    }
-
-    /* Rotate pieces for black player */
-    .flipped .piece {
-      transform: rotate(180deg);
-    }
-  </style>
-
-  <title>Document</title>
-</head>
-
-<body>
-
-  <div class="h-screen w-full flex items-center justify-center bg-zinc-950">
-    <div class="chessboard w-96 h-96 "></div>
-  </div>
-
-  <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"
-    integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"
-    integrity="sha512-xRllwz2gdZciIB+AkEbeq+gVhX8VB8XsfqeFbUh+SzHlN96dEduwtTuVuc2u9EROlmW9+yhRlxjif66ORpsgVA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="/js/chessGame.js"></script>
-</body>
-
+        <p class="top-6 right-6 text-xl absolute text-center">
+          <a href="/login" class="hover:underline">Log in</a>
+        </p>
+      </div>
+    </div>
+  </body>
 </html>

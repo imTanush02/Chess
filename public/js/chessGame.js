@@ -1,5 +1,8 @@
+const token = localStorage.getItem("token"); // ya cookie se read kar
 const socket = io();
+
 const chess = new Chess();
+
 const boardElement = document.querySelector(".chessboard");
 
 let draggedPiece = null;

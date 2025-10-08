@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-[#2D2B29] relative">
+    <div class="min-h-screen text-white flex items-center flex-col">
+      <div onclick="location.href='/'" class="w-[15%] cursor-pointer h-[10%]">
+        <img
+          class="w-full h-full object-cover"
+          src="https://imgs.search.brave.com/9rhqtOh9t6A6IMe33XWhWD1a_TQAVWhslOYgC6GXAZw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/Y2hlc3MtY29tLWxv/Z28taXMtc2VhbWxl/c3NseS1tZXJnZWQt/d2l0aC10aGUtcGF3/bi12MC1ud3loZ21z/YTkzemQxLnBuZz93/aWR0aD02NDAmY3Jv/cD1zbWFydCZhdXRv/PXdlYnAmcz03ZWUy/OGM0MDZjYTJhYjNh/NGU5NTdkZjNjMjAx/OTZiZTBhZjViZjhm"
+          alt=""
+        />
+      </div>
+      <div
+        class="p-8 rounded-lg flex flex-col justify-center items-center w-full max-w-xl"
+      >
+        <h2 class="text-4xl font-bold text-center mb-6">
+          Enter Your Email and a Password
+        </h2>
+
+        <form
+          id="loginForm"
+          class="flex flex-col w-3/4 items-center text-white justify-center gap-2"
+        >
+          <input
+            class="w-full outline-none p-4 rounded-md bg-[#2D2B29] border-2 border-zinc-700"
+            name="email"
+            id="email"
+            placeholder="Email"
+          />
+          <input
+            class="w-full outline-none p-4 rounded-md bg-[#2D2B29] border-2 border-zinc-700"
+            name="password"
+            id="password"
+            placeholder="Password"
+            type="password"
+          />
+          <button
+            type="submit"
+            class="w-full rounded-lg p-2 mt-5 text-2xl font-black flex items-center justify-center h-[10%] bg-[#A1D05F] text-white"
+          >
+            Login
+          </button>
+        </form>
+
+        <button
+          onclick="location.href='/auth/google'"
+          class="flex text-lg font-bold items-center opacity-[80%] hover:opacity-[100%] justify-center gap-4 mt-10 bg-[#1D1C1A] rounded-lg p-2 w-3/4"
+        >
+          <img
+            class="h-[10%] w-[10%]"
+            src="https://imgs.search.brave.com/MIGGUxXvA8eZP5fR9x6pAwOOVi846wgiFXYQTCH5kqg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/aWNvbnNjb3V0LmNv/bS9pY29uL2ZyZWUv/cG5nLTI1Ni9mcmVl/LWdvb2dsZS1sb2dv/LWljb24tc3ZnLWRv/d25sb2FkLXBuZy0y/NDc2NDc5LnBuZz9m/PXdlYnAmdz0xMjg"
+            alt=""
+          />
+          Continue with Google
+        </button>
+
+        <p class="top-6 right-6 text-xl absolute text-center">
+          <a href="/signup" class="hover:underline">Register</a>
+        </p>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const res = await fetch("/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: document.getElementById("email").value,
+              password: document.getElementById("password").value,
+            }),
+          });
+
+          if (res.ok) {
+            window.location = "/home"; // token already cookie me set ho chuka
+          } else {
+            const data = await res.json();
+            alert(data.error || "Error");
+          }
+        });
+    </script>
+  </body>
+</html>

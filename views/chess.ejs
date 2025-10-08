@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://img.icons8.com/fluent/512/chess-com.png"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .chessboard {
+        display: grid;
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        grid-template-rows: repeat(8, minmax(0, 1fr));
+        width: 400px;
+        height: 400px;
+        transform: rotate(0deg);
+      }
+
+      .piece.white {
+        color: white;
+        filter: drop-shadow(0 0 2px rgba(0, 0, 0, 1));
+      }
+
+      .piece.black {
+        color: black;
+      }
+
+      .flipped {
+        transform: rotate(180deg);
+      }
+
+      .square {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .square.Light {
+        background-color: #7f8896;
+      }
+
+      .square.Dark {
+        background-color: #363d4a;
+      }
+
+      .piece {
+        font-size: 36px;
+        cursor: pointer;
+      }
+
+      .piece.draggable {
+        cursor: grab;
+      }
+
+      .dragging {
+        opacity: 0.5;
+      }
+
+      /* Rotate pieces for black player */
+      .flipped .piece {
+        transform: rotate(180deg);
+      }
+    </style>
+
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div class="h-screen w-full flex items-center relative justify-center bg-zinc-950">
+      <div class="w-full h-screen  ">
+        <img class="w-full - h-screen object-cover opacity-30" src="https://imgs.search.brave.com/VwpNWEhqRK3o28UJjISUFVC5Y1FmuXtbkJXNomRwNNw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzgwLzg4/L2JhLzgwODhiYThk/Mjc2YmQ5ZmE1NGU4/ODI0MjNkODE0ZDVl/LmpwZw" alt="">
+      </div>
+      <div class="chessboard absolute shadow-zinc-700 shadow-xl w-[35vw] h-[35vw] "></div>
+    </div>
+
+    <script
+      src="https://cdn.socket.io/4.8.1/socket.io.min.js"
+      integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"
+      integrity="sha512-xRllwz2gdZciIB+AkEbeq+gVhX8VB8XsfqeFbUh+SzHlN96dEduwtTuVuc2u9EROlmW9+yhRlxjif66ORpsgVA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="/js/chessGame.js"></script>
+  </body>
+</html>
