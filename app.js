@@ -11,17 +11,17 @@ const { Chess } = require("chess.js");
 
 const authRoutes = require("./routes/auth");
 const User = require("./models/User");
-const { verifySocketToken } = require("./middleware/auth");
+const { verifySocketToken, verifyToken } = require("./middleware/auth");
 
 const app = express();
 const server = http.createServer(app);
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("Mongo connected"))
+  .catch((e) => console.error(e));
 const io = socketIO(server, {
   cors: { origin: true, credentials: true },
 });
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("Mongo connected"))
-  .catch((e) => console.error(e));
 
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
@@ -36,7 +36,12 @@ app.use("/auth", authRoutes);
 app.get("/", (req, res) => res.render("index"));
 app.get("/login", (req, res) => res.render("Login"));
 app.get("/signup", (req, res) => res.render("SignUp"));
-app.get("/home", (req, res) => res.render("chess"));
+app.get("/home", verifyToken, (req, res) => {
+  if (!req.user) {
+    return res.redirect("/"); // Redirect to `/` if user is unauthorized
+  }
+  res.render("chess", { user: req.user }); 
+});
 
 const chess = new Chess();
 let players = { white: null, black: null }; // will hold socketId

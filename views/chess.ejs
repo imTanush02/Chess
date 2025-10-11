@@ -69,11 +69,23 @@
   </head>
 
   <body>
-    <div class="h-screen w-full flex items-center relative justify-center bg-zinc-950">
-      <div class="w-full h-screen  ">
-        <img class="w-full - h-screen object-cover opacity-30" src="https://imgs.search.brave.com/VwpNWEhqRK3o28UJjISUFVC5Y1FmuXtbkJXNomRwNNw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzgwLzg4/L2JhLzgwODhiYThk/Mjc2YmQ5ZmE1NGU4/ODI0MjNkODE0ZDVl/LmpwZw" alt="">
+    <div
+      class="h-screen w-full flex items-center relative justify-center bg-zinc-950"
+    >
+      <div class="w-full h-screen">
+        <img
+          class="w-full - h-screen object-cover opacity-30"
+          src="https://imgs.search.brave.com/VwpNWEhqRK3o28UJjISUFVC5Y1FmuXtbkJXNomRwNNw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzgwLzg4/L2JhLzgwODhiYThk/Mjc2YmQ5ZmE1NGU4/ODI0MjNkODE0ZDVl/LmpwZw"
+          alt=""
+        />
       </div>
-      <div class="chessboard absolute shadow-zinc-700 shadow-xl w-[35vw] h-[35vw] "></div>
+      <p class="top-6 right-6 text-xl text-white absolute text-center">
+        <a href="#" onclick="logout()">Log Out</a>
+      </p>
+
+      <div
+        class="chessboard absolute shadow-zinc-700 shadow-xl w-[35vw] h-[35vw]"
+      ></div>
     </div>
 
     <script
@@ -88,5 +100,21 @@
       referrerpolicy="no-referrer"
     ></script>
     <script src="/js/chessGame.js"></script>
+    <script>
+      async function logout() {
+        try {
+          const res = await fetch("/auth/logout", {
+            method: "POST",
+            credentials: "include", // ye zaroori hai taaki cookie clear ho
+          });
+          const data = await res.json();
+          if (data.ok) {
+            window.location.href = "/login"; // redirect after logout
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    </script>
   </body>
 </html>
