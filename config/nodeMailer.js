@@ -40,12 +40,17 @@ const getOtpEmailTemplate = (otpCode) => {
 
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587, 
-  secure: false, 
+  service: 'gmail', // Direct service use karo
   auth: {
     user: process.env.EMAIL,
     pass: process.env.PASSWORD
+  },
+  connectionTimeout: 60000, // 60 seconds
+  socketTimeout: 60000,
+  greetingTimeout: 30000,
+  secure: false,
+  tls: {
+    rejectUnauthorized: false
   }
 });
 
