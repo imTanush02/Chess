@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const { verifyToken } = require("../middleware/auth");
 const passport = require("passport");
-const OTP = require("../models/otp");
+const OTP = require("../models/Otp");
 const otpGenerator = require("otp-generator");
 const { getOtpEmailTemplate, transporter } = require("../config/nodeMailer");
 
