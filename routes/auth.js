@@ -36,13 +36,7 @@ router.post("/send-otp", async (req, res) => {
   });
 
   try {
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      console.log(existingUser);
-      return res
-        .status(400)
-        .json({ success: false, message: "User already registered" });
-    }
+   
     await OTP.findOneAndUpdate(
       { email },
       { otp: otpCode, createdAt: new Date() },
