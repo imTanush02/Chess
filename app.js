@@ -15,7 +15,7 @@ const { verifySocketToken, verifyToken } = require("./middleware/auth");
 
 const app = express();
 const server = http.createServer(app);
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGO_URI || process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Mongo connected"))
   .catch((e) => console.error(e));
 const io = socketIO(server, {
