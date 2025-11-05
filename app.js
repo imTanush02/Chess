@@ -47,6 +47,21 @@ const chess = new Chess();
 let players = { white: null, black: null }; // will hold socketId
 let userBySocket = {}; // socketId -> user info
 
+// Helper function to broadcast current players
+const broadcastPlayers = () => {
+  const whitePlayer = players.white ? userBySocket[players.white] : null;
+  const blackPlayer = players.black ? userBySocket[players.black] : null;
+  
+  // Count spectators
+  const spectatorCount = Object.values(userBySocket).filter(user => user.role === "spectator").length;
+  
+  io.emit("playersUpdate", {
+    white: whitePlayer ? { email: whitePlayer.email } : null,
+    black: blackPlayer ? { email: blackPlayer.email } : null,
+    spectators: spectatorCount
+  });
+};
+
 io.use((socket, next) => {
   let token;
 
@@ -93,6 +108,9 @@ io.on("connection", (socket) => {
 
   // send initial board fen
   socket.emit("boardState", chess.fen());
+  
+  // broadcast current players to all clients
+  broadcastPlayers();
 
   socket.on("disconnect", () => {
     console.log("disconnect", socket.id);
@@ -103,6 +121,9 @@ io.on("connection", (socket) => {
       players.black = null;
     }
     delete userBySocket[socket.id];
+    
+    // broadcast updated players after disconnect
+    broadcastPlayers();
   });
 
   socket.on("move", (move) => {
@@ -123,6 +144,30 @@ io.on("connection", (socket) => {
       if (result) {
         io.emit("move", move);
         io.emit("boardState", chess.fen());
+        
+        // Check for game over
+        if (chess.isGameOver()) {
+          let gameOverData = {
+            isGameOver: true,
+            reason: ""
+          };
+          
+          if (chess.isCheckmate()) {
+            const winner = chess.turn() === "w" ? "Black" : "White";
+            gameOverData.reason = "checkmate";
+            gameOverData.winner = winner;
+          } else if (chess.isStalemate()) {
+            gameOverData.reason = "stalemate";
+          } else if (chess.isThreefoldRepetition()) {
+            gameOverData.reason = "threefold_repetition";
+          } else if (chess.isInsufficientMaterial()) {
+            gameOverData.reason = "insufficient_material";
+          } else if (chess.isDraw()) {
+            gameOverData.reason = "draw";
+          }
+          
+          io.emit("gameOver", gameOverData);
+        }
       } else {
         socket.emit("InvalidMove", "illegal");
       }
